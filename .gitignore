@@ -1,0 +1,9 @@
+/venv
+/__pycache__
+.idea
+.env
+.venv
+DB/__pycache__
+handlers/__pycache__
+keyboards/__pycache__
+source/__pycache__
