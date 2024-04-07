@@ -53,7 +53,10 @@ async def get_spec(call: types.CallbackQuery, state: FSMContext):
 async def get_cats(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(cat=call.data)
     data = await state.get_data()
-    photo = FSInputFile("source/Машенька.jpg")
+    if data['cat'] == 'внесение изменений в ЕГРЮЛ':
+        photo = FSInputFile('source/vnesenie_izmenenii.jpg')
+    else:
+        photo = FSInputFile("source/Машенька.jpg")
     print(data['cat'])
     # await call.message.edit_text('выберете подкатегорию', reply_markup=sub_cats_markup(data['cat']))
     await call.message.edit_media(media=InputMediaPhoto(media=photo, caption='выберете подкатегорию', parse_mode='Markdown'),
