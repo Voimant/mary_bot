@@ -69,16 +69,28 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
     x = 0
     list_affiars = search_delo(data['sub_cat'])
     photo = FSInputFile(f'{PIC_PATH}{list_affiars[x]["image_result"]}')
-    text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
-            f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
-            f'*Сумма иска*: {list_affiars[x]["summ_plaintiff"]}\n'
-            f'*Суть спора*: {list_affiars[x]["dispute"]}\n'
-            f'*Результат*: {list_affiars[x]["result_court"]}\n'
-            f'*Роль*: {list_affiars[x]["role"]}\n'
-            f'*Выгода клиента*: {list_affiars[x]["result_client"]}\n'
-            f'*Истец*: {list_affiars[x]["defendant"]}\n'
-            f'*Ответчик*: {list_affiars[x]["plaintiff"]}\n'
-            f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
+    if data['cat'] == 'банкротство':
+        text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
+                f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
+                f'*Сумма иска*: {list_affiars[x]["summ_plaintiff"]}\n'
+                f'*Суть спора*: {list_affiars[x]["dispute"]}\n'
+                f'*Результат*: {list_affiars[x]["result_court"]}\n'
+                f'*Роль*: {list_affiars[x]["role"]}\n'
+                f'*Выгода клиента*: {list_affiars[x]["result_client"]}\n'
+                f'*Должник*: {list_affiars[x]["defendant"]}\n'
+                f'*Кредитор*: {list_affiars[x]["plaintiff"]}\n'
+                f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
+    else:
+        text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
+                f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
+                f'*Сумма иска*: {list_affiars[x]["summ_plaintiff"]}\n'
+                f'*Суть спора*: {list_affiars[x]["dispute"]}\n'
+                f'*Результат*: {list_affiars[x]["result_court"]}\n'
+                f'*Роль*: {list_affiars[x]["role"]}\n'
+                f'*Выгода клиента*: {list_affiars[x]["result_client"]}\n'
+                f'*Истец*: {list_affiars[x]["defendant"]}\n'
+                f'*Ответчик*: {list_affiars[x]["plaintiff"]}\n'
+                f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
     #await call.message.answer_photo(photo=photo, caption=text, parse_mode='Markdown', reply_markup=paginator_markup)
     await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
                                   reply_markup=paginator_markup)
@@ -96,16 +108,28 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
         else:
             x = 0
         photo = FSInputFile(f'{PIC_PATH}{list_affiars[x]["image_result"]}')
-        text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
-                f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
-                f'*Сумма иска*: {list_affiars[x]["summ_plaintiff"]}\n'
-                f'*Суть спора*: {list_affiars[x]["dispute"]}\n'
-                f'*Результат*: {list_affiars[x]["result_court"]}\n'
-                f'*Роль*: {list_affiars[x]["role"]}\n'
-                f'*Выгода клиента*: {list_affiars[x]["result_client"]}\n'
-                f'*Истец*: {list_affiars[x]["defendant"]}\n'
-                f'*Ответчик*: {list_affiars[x]["plaintiff"]}\n'
-                f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
+        if data['cat'] == 'банкротство':
+            text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
+                    f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
+                    f'*Сумма иска*: {list_affiars[x]["summ_plaintiff"]}\n'
+                    f'*Суть спора*: {list_affiars[x]["dispute"]}\n'
+                    f'*Результат*: {list_affiars[x]["result_court"]}\n'
+                    f'*Роль*: {list_affiars[x]["role"]}\n'
+                    f'*Выгода клиента*: {list_affiars[x]["result_client"]}\n'
+                    f'*Должник*: {list_affiars[x]["defendant"]}\n'
+                    f'*Кредитор*: {list_affiars[x]["plaintiff"]}\n'
+                    f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
+        else:
+            text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
+                    f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
+                    f'*Сумма иска*: {list_affiars[x]["summ_plaintiff"]}\n'
+                    f'*Суть спора*: {list_affiars[x]["dispute"]}\n'
+                    f'*Результат*: {list_affiars[x]["result_court"]}\n'
+                    f'*Роль*: {list_affiars[x]["role"]}\n'
+                    f'*Выгода клиента*: {list_affiars[x]["result_client"]}\n'
+                    f'*Истец*: {list_affiars[x]["defendant"]}\n'
+                    f'*Ответчик*: {list_affiars[x]["plaintiff"]}\n'
+                    f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
         await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'), reply_markup=paginator_markup)
         await state.update_data(my_delo=x)
         await state.set_state(Affiers.my_delo)
