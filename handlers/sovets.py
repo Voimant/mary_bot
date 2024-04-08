@@ -22,7 +22,9 @@ async def get_sovets(call: CallbackQuery, state: FSMContext):
     count = random.randint(0, len(sovets_list) - 1)
     photo = FSInputFile("source/photo_sovet.jpg")
     if call.message.content_type == ContentType.PHOTO:
+        photo = FSInputFile("source/photo_sovet.jpg")
         await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=sovets_list[count],
-                                                            parse_mode='Markdown'),reply_markup=sovets_markup)
+                                                            parse_mode='Markdown'), reply_markup=sovets_markup)
     else:
-        await call.message.answer(sovets_list[count], reply_markup=sovets_markup)
+        photo = FSInputFile("source/photo_sovet.jpg")
+        await call.message.answer_photo(photo=photo, caption=sovets_list[count], reply_markup=sovets_markup)
