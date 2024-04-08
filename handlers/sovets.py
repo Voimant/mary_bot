@@ -1,6 +1,6 @@
 import random
 
-from aiogram import Router, F
+from aiogram import Router, F, types
 from aiogram.enums import ContentType
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMediaPhoto
@@ -27,3 +27,14 @@ async def get_sovets(call: CallbackQuery, state: FSMContext):
     else:
         photo = FSInputFile("source/photo_sovet.jpg")
         await call.message.answer_photo(photo=photo, caption=sovets_list[count], reply_markup=sovets_markup)
+
+
+@router.callback_query(F.data == 'button_3')
+async def otziv(call: CallbackQuery, state: FSMContext):
+    await state.clear()
+    photo_1 = FSInputFile('source/otzivi/ot_1.jpg')
+    photo_2 = FSInputFile('source/otzivi/ot_2.jpg')
+
+    media = [InputMediaPhoto(media=photo_1), InputMediaPhoto(media=photo_2)]
+    await call.message.answer_media_group(media=media)
+    await call.message.answer('вернуться в меню?', reply_markup=main_markup)
