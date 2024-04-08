@@ -16,3 +16,12 @@ record_button = [
     [InlineKeyboardButton(text='Назад', callback_data='cancel')]
 ]
 record_markup = InlineKeyboardMarkup(inline_keyboard=record_button)
+
+
+sovets_button = [
+    [InlineKeyboardButton(text='Следующий "случайный" совет', callback_data="mary_sovets")],
+    [InlineKeyboardButton(text='Главное меню', callback_data='cancel')]
+
+]
+
+sovets_markup = InlineKeyboardMarkup(inline_keyboard=sovets_button)

@@ -7,7 +7,7 @@ from DB.db_func import db_cats_list, db_sub_cats_list
 main_menu_button = [
     [InlineKeyboardButton(text='👩🏽‍💻 Запись на консультацию', callback_data='record')],
     [InlineKeyboardButton(text='⚖️ Моя специализация и опыт', callback_data='button_2')],
-    # [InlineKeyboardButton(text='🎖 Отзывы Доверителей', callback_data='button_3')],
+    [InlineKeyboardButton(text='🎖 Отзывы Доверителей', callback_data='button_3')],
     [InlineKeyboardButton(text='💁🏽‍♀️ Советы от юриста', callback_data='mary_sovets')],
     # [InlineKeyboardButton(text='⁉️ Задать открытый вопрос юристу', url='https://t.me/mara_mary_lawyer')],
     [InlineKeyboardButton(text='📲 Контакты', callback_data='contacts')],
