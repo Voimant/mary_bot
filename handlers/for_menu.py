@@ -214,13 +214,6 @@ async def get_ready(call: types.CallbackQuery, state: FSMContext):
 
 
 
-
-@router.callback_query(F.data == 'button_3')
-async def get_otziv(call: types.CallbackQuery):
-    await call.message.edit_text(text='Здесь будут жить отзывы клиентов', inline_message_id=call.inline_message_id,
-                                 reply_markup=cancel_markup)
-
-
 @router.callback_query(F.data == 'contacts')
 async def contacts(call: types.CallbackQuery, state: FSMContext):
     await state.clear()
