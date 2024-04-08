@@ -1,10 +1,12 @@
 import asyncio
+import os
 import random
 
-from aiogram import Router, F, types
+from aiogram import Router, F, types, Bot
 from aiogram.enums import ContentType
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMediaPhoto
+from dotenv import load_dotenv
 
 from keyboards.keyboard_actions import sovets_markup
 from source.main_text import main_texts
@@ -15,10 +17,13 @@ from source.sovets_text import sovets_list
 
 
 router = Router()
-
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
+bot = Bot(token=TOKEN)
 
 @router.callback_query(F.data == 'mary_sovets')
 async def get_sovets(call: CallbackQuery, state: FSMContext):
+    await bot.send_message(-1002054778396, f'@{call.from_user.username}, Перешел в советы')
     await state.clear()
     count = random.randint(0, len(sovets_list) - 1)
     if call.message.content_type == ContentType.PHOTO:
@@ -32,9 +37,10 @@ async def get_sovets(call: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data == 'button_3')
 async def otziv(call: CallbackQuery, state: FSMContext):
     await state.clear()
+    await bot.send_message(-1002054778396, f'@{call.from_user.username}, Перешел в отзывы')
     photo_1 = FSInputFile('source/otzivi/ot_1.jpg')
     photo_2 = FSInputFile('source/otzivi/ot_2.jpg')
-    photo_4  = FSInputFile('source/otzivi/ot_3.jpg')
+    photo_4 = FSInputFile('source/otzivi/ot_3.jpg')
 
     media = [InputMediaPhoto(media=photo_1, caption='Отзывы клиентов'), InputMediaPhoto(media=photo_2), InputMediaPhoto(media=photo_4)]
     await call.message.answer_media_group(media=media)

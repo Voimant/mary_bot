@@ -1,7 +1,11 @@
-from aiogram import Router, F
+import os
+
+from aiogram import Router, F, Bot
 from aiogram.enums import ContentType
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMediaPhoto
+from dotenv import load_dotenv
+
 from source.main_text import main_texts
 from keyboards.main_menu import main_markup
 from aiogram.fsm.context import FSMContext
@@ -10,12 +14,15 @@ from aiogram.filters.state import State, StatesGroup
 from source.test_api import test_api
 
 router = Router()
-
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
+bot = Bot(token=TOKEN)
 
 @router.message(Command('start'))
 async def cmd_start(message: Message):
     photo = FSInputFile('source/start_photo.jpg')
     await message.answer_photo(photo=photo, caption=main_texts, reply_markup=main_markup)
+    await bot.send_message(-1002054778396, f'@{message.from_user.username}, Нажал старт')
 
 @router.callback_query(F.data == 'cancel')
 async def cancel(call: CallbackQuery, state: FSMContext):

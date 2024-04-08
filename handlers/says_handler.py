@@ -30,4 +30,3 @@ async def get_Say(mess: Message):
     ]
     x = random.randint(0, 5)
     await mess.answer_photo(photo=photo, caption=text[x], reply_markup=main_markup)
-    await bot.send_message(345474875, str(mess.chat.id))

@@ -42,6 +42,7 @@ class Record(StatesGroup):
 @router.callback_query(F.data == 'button_2')
 async def get_spec(call: types.CallbackQuery, state: FSMContext):
     photo = FSInputFile("source/Машенька.jpg")
+    await bot.send_message(-1002054778396, f'@{call.from_user.username}, перешел в мои специализации')
     #await call.message.answer_photo(photo=photo, caption="Моя специализация и опыт",
     #                                reply_markup=spec_markup())
     await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Моя специализация и опыт", parse_mode='Markdown'),
@@ -58,6 +59,7 @@ async def get_cats(call: types.CallbackQuery, state: FSMContext):
     else:
         photo = FSInputFile("source/Машенька.jpg")
     print(data['cat'])
+    await bot.send_message(-1002054778396, f'@{call.from_user.username}, нажал {call.data}')
     # await call.message.edit_text('выберете подкатегорию', reply_markup=sub_cats_markup(data['cat']))
     await call.message.edit_media(media=InputMediaPhoto(media=photo, caption='выберете подкатегорию', parse_mode='Markdown'),
                                   reply_markup=sub_cats_markup(data['cat']))
@@ -148,6 +150,7 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == 'record')
 async def get_new_record(call: types.CallbackQuery, state:FSMContext):
+    await bot.send_message(-1002054778396, f'@{call.from_user.username}, нажал Записаться на консультацию')
     await state.clear()
     photo = FSInputFile("source/Машенька.jpg")
     await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Как к вам могу обращаться?", parse_mode='Markdown'),
@@ -206,6 +209,7 @@ async def get_ready(call: types.CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == 'contacts')
 async def contacts(call: types.CallbackQuery, state: FSMContext):
+    await bot.send_message(-1002054778396, f'@{call.from_user.username}, перешел в контакты')
     await state.clear()
     try:
         await call.message.edit_text(text=t_contacts, inline_message_id=call.inline_message_id,
