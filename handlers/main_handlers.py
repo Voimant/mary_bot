@@ -22,7 +22,11 @@ bot = Bot(token=TOKEN)
 async def cmd_start(message: Message):
     photo = FSInputFile('source/start_photo.jpg')
     await message.answer_photo(photo=photo, caption=main_texts, reply_markup=main_markup)
-    await bot.send_message(-1002054778396, f'@{message.from_user.username}, Нажал старт.\n номер телефона: {message.contact.phone_number}')
+    try:
+        await bot.send_message(-1002054778396, f'@{message.from_user.username}, Нажал старт.\n номер телефона: {message.contact.phone_number}')
+    except Exception as e:
+        await bot.send_message(-1002054778396,
+                               f'@{message.from_user.username}, Нажал старт.\n')
 
 @router.callback_query(F.data == 'cancel')
 async def cancel(call: CallbackQuery, state: FSMContext):
