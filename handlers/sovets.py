@@ -44,6 +44,5 @@ async def otziv(call: CallbackQuery, state: FSMContext):
 
     media = [InputMediaPhoto(media=photo_1, caption='Отзывы клиентов'), InputMediaPhoto(media=photo_2), InputMediaPhoto(media=photo_4)]
     await call.message.answer_media_group(media=media)
-    await asyncio.sleep(5)
     photo_3 = FSInputFile('source/mzg2.jpg')
     await call.message.answer_photo(photo=photo_3, caption='Жду вас на консультации', reply_markup=main_markup)

@@ -85,6 +85,14 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
                 f'*Должник*: {list_affiars[x]["defendant"]}\n'
                 f'*Кредитор*: {list_affiars[x]["plaintiff"]}\n'
                 f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
+        await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                      reply_markup=paginator_markup)
+
+    elif data['cat'] == 'внесение изменений в ЕГРЮЛ':
+        text = f'{list_affiars[x]["result_court"]}'
+        await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                      reply_markup=paginator_markup)
+
     else:
         text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
                 f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
@@ -96,9 +104,8 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
                 f'*Истец*: {list_affiars[x]["defendant"]}\n'
                 f'*Ответчик*: {list_affiars[x]["plaintiff"]}\n'
                 f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
-    #await call.message.answer_photo(photo=photo, caption=text, parse_mode='Markdown', reply_markup=paginator_markup)
-    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
-                                  reply_markup=paginator_markup)
+        await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                      reply_markup=paginator_markup)
     await state.set_state(Affiers.my_delo)
 
 
@@ -124,6 +131,16 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
                     f'*Должник*: {list_affiars[x]["defendant"]}\n'
                     f'*Кредитор*: {list_affiars[x]["plaintiff"]}\n'
                     f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
+            await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                          reply_markup=paginator_markup)
+            await state.update_data(my_delo=x)
+
+        elif data['cat'] == 'внесение изменений в ЕГРЮЛ':
+            text = f'{list_affiars[x]["result_court"]}'
+            await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                          reply_markup=paginator_markup)
+            await state.update_data(my_delo=x)
+
         else:
             text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
                     f'*Cуд (город)*: {list_affiars[x]["court"]}\n'
@@ -135,8 +152,8 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
                     f'*Истец*: {list_affiars[x]["defendant"]}\n'
                     f'*Ответчик*: {list_affiars[x]["plaintiff"]}\n'
                     f'[Ссылка на судебный акт]({str(list_affiars[x]["urls"])})')
-        await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'), reply_markup=paginator_markup)
-        await state.update_data(my_delo=x)
+            await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'), reply_markup=paginator_markup)
+            await state.update_data(my_delo=x)
         await state.set_state(Affiers.my_delo)
 
     elif call.data == 'record':
