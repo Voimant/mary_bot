@@ -204,16 +204,6 @@ async def get_ready(call: types.CallbackQuery, state: FSMContext):
     await state.clear()
 
 
-
-
-
-
-
-
-
-
-
-
 @router.callback_query(F.data == 'contacts')
 async def contacts(call: types.CallbackQuery, state: FSMContext):
     await state.clear()
