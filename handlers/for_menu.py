@@ -195,11 +195,11 @@ async def get_ready(call: types.CallbackQuery, state: FSMContext):
             data['name'],
             data['number_phone'],
             data['about'],
-            call.from_user.username
+            f'https://t.me/{call.from_user.username}'
         )
     photo = FSInputFile("source/Машенька.jpg")
     await call.message.answer_photo(photo=photo, caption='Заявка отправлена, свяжусь с вами в ближайшее время', reply_markup=main_markup)
-    await bot.send_message(345474875, f'У вас новая заявка от {call.from_user.username} перейти в'
+    await bot.send_message(345474875, f'У вас новая заявка от @{call.from_user.username} перейти в'
                                       f'[Админ-панель](http://95.163.229.135/admin/)', parse_mode='Markdown')
     await state.clear()
 
