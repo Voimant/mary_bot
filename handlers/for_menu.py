@@ -174,6 +174,7 @@ async def get_new_record(call: types.CallbackQuery, state:FSMContext):
                                   reply_markup=cancel_markup)
     await state.set_state(Record.name)
 
+
 @router.message(Record.name)
 async def get_record(mess: types.Message, state: FSMContext):
     await state.update_data(name=mess.text)

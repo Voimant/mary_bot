@@ -17,8 +17,10 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 bot = Bot(token=TOKEN)
 
+
 @router.message()
-async def get_Say(mess: Message):
+async def get_Say(mess: Message, state: FSMContext):
+    await state.clear()
     photo = FSInputFile("source/Машенька.jpg")
     text = [
         'Не поняла вас? выберете одну из кнопок меню',
@@ -28,5 +30,5 @@ async def get_Say(mess: Message):
         'Мы ведь не в Вот<censured>апе, пользуйтесь кнопками пока можете!',
         'Ну зачем писать если можно жать!'
     ]
-    x = random.randint(0, 5)
+    x = random.randint(0, len(text) - 1)
     await mess.answer_photo(photo=photo, caption=text[x], reply_markup=main_markup)

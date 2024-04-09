@@ -54,7 +54,7 @@ cancel_button = [[InlineKeyboardButton(text="Главное меню", callback_
 cancel_markup = InlineKeyboardMarkup(inline_keyboard=cancel_button)
 
 contacts_button = [
-    [InlineKeyboardButton(text='🌐VK', url='https://vk.com/platunova_lawyer')],
+    [InlineKeyboardButton(text='🌐VK', url='https://vk.com/the_lawyer_isa_maniac')],
     [InlineKeyboardButton(text='📷instagram', url='https://instagram.com/platunova.mara?igshid=OGQ5ZDc2ODk2ZA==')],
     [InlineKeyboardButton(text='Назад', callback_data='cancel')]
 ]
