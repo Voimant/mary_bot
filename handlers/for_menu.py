@@ -8,8 +8,9 @@ from aiogram.filters import Command
 from aiogram.types import Message
 from dotenv import load_dotenv
 from DB.db_func import db_cats_list, db_sub_cats_list, search_delo, db_records
-from keyboards.keyboard_actions import paginator_markup, record_markup
-from keyboards.main_menu import spec_markup, cancel_markup, contacts_markup, sub_cats_markup, main_markup
+from keyboards.keyboard_actions import paginator_markup, record_markup, egrul_markup
+from keyboards.main_menu import spec_markup, cancel_markup, contacts_markup, sub_cats_markup, main_markup, \
+    sub_bank_markup
 from aiogram.fsm.context import FSMContext
 from aiogram.filters.state import State, StatesGroup
 import os
@@ -61,8 +62,13 @@ async def get_cats(call: types.CallbackQuery, state: FSMContext):
     print(data['cat'])
     await bot.send_message(-1002054778396, f'@{call.from_user.username}, нажал {call.data}')
     # await call.message.edit_text('выберете подкатегорию', reply_markup=sub_cats_markup(data['cat']))
-    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption='выберете подкатегорию', parse_mode='Markdown'),
-                                  reply_markup=sub_cats_markup(data['cat']))
+    if data['cat'] == 'банкротство':
+        await call.message.edit_media(media=InputMediaPhoto(media=photo, caption='выберите подкатегорию', parse_mode='Markdown'),
+                                      reply_markup=sub_bank_markup(data['cat']))
+    else:
+        await call.message.edit_media(
+            media=InputMediaPhoto(media=photo, caption='выберите подкатегорию', parse_mode='Markdown'),
+            reply_markup=sub_cats_markup(data['cat']))
     await state.set_state(Affiers.sub_cat)
 
 
@@ -91,7 +97,7 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
     elif data['cat'] == 'внесение изменений в ЕГРЮЛ':
         text = f'{list_affiars[x]["result_court"]}'
         await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
-                                      reply_markup=paginator_markup)
+                                      reply_markup=egrul_markup)
 
     else:
         text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
@@ -138,7 +144,7 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
         elif data['cat'] == 'внесение изменений в ЕГРЮЛ':
             text = f'{list_affiars[x]["result_court"]}'
             await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
-                                          reply_markup=paginator_markup)
+                                          reply_markup=egrul_markup)
             await state.update_data(my_delo=x)
 
         else:
@@ -170,7 +176,7 @@ async def get_new_record(call: types.CallbackQuery, state:FSMContext):
     await bot.send_message(-1002054778396, f'@{call.from_user.username}, нажал Записаться на консультацию')
     await state.clear()
     photo = FSInputFile("source/Машенька.jpg")
-    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Как к вам могу обращаться?", parse_mode='Markdown'),
+    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Как могу к Вам обращаться?", parse_mode='Markdown'),
                                   reply_markup=cancel_markup)
     await state.set_state(Record.name)
 
@@ -178,7 +184,7 @@ async def get_new_record(call: types.CallbackQuery, state:FSMContext):
 @router.message(Record.name)
 async def get_record(mess: types.Message, state: FSMContext):
     await state.update_data(name=mess.text)
-    await mess.answer('Введите ваш мобильный номер телефона для связи с вами', reply_markup=cancel_markup)
+    await mess.answer('Введите ваш мобильный номер телефона', reply_markup=cancel_markup)
     await state.set_state(Record.number_phone)
 
 
@@ -191,7 +197,7 @@ async def get_number(mess: Message, state: FSMContext):
         await state.set_state(Record.number_phone)
     else:
         await state.update_data(number_phone=mess.text)
-        await mess.answer('Опишите суть дела', reply_markup=cancel_markup)
+        await mess.answer('кратко опишите суть дела', reply_markup=cancel_markup)
         await state.set_state(Record.about)
 
 
@@ -219,7 +225,7 @@ async def get_ready(call: types.CallbackQuery, state: FSMContext):
             f'https://t.me/{call.from_user.username}'
         )
     photo = FSInputFile("source/Машенька.jpg")
-    await call.message.answer_photo(photo=photo, caption='Заявка отправлена, свяжусь с вами в ближайшее время', reply_markup=main_markup)
+    await call.message.answer_photo(photo=photo, caption='Заявка отправлена, свяжусь с Вами в ближайшее время', reply_markup=main_markup)
     await bot.send_message(345474875, f'У вас новая заявка от @{call.from_user.username} перейти в'
                                       f'[Админ-панель](http://95.163.229.135/admin/)', parse_mode='Markdown')
     await state.clear()

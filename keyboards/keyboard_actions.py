@@ -7,8 +7,15 @@ paginator_button = [
     [InlineKeyboardButton(text='👩🏽‍💻 Запись на консультацию', callback_data='record')],
     [InlineKeyboardButton(text='Назад', callback_data='cancel')]
 ]
-
 paginator_markup = InlineKeyboardMarkup(inline_keyboard=paginator_button)
+
+
+egrul_button = [
+    [InlineKeyboardButton(text='Передать сведения', url='https://t.me/mplatunova')],
+    [InlineKeyboardButton(text='👩🏽‍💻 Запись на консультацию', callback_data='record')],
+    [InlineKeyboardButton(text='Назад', callback_data='cancel')]
+]
+egrul_markup = InlineKeyboardMarkup(inline_keyboard=paginator_button)
 
 
 record_button = [

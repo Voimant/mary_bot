@@ -9,7 +9,7 @@ main_menu_button = [
     [InlineKeyboardButton(text='⚖️ Моя специализация и опыт', callback_data='button_2')],
     [InlineKeyboardButton(text='🎖 Отзывы Доверителей', callback_data='button_3')],
     [InlineKeyboardButton(text='💁🏽‍♀️ Советы от юриста', callback_data='mary_sovets')],
-    # [InlineKeyboardButton(text='⁉️ Задать открытый вопрос юристу', url='https://t.me/mara_mary_lawyer')],
+    [InlineKeyboardButton(text='⁉️ Задать открытый вопрос юристу', url='https://t.me/+Ds1Aiq4m0hg2NzFi')],
     [InlineKeyboardButton(text='📲 Контакты', callback_data='contacts')],
     # [InlineKeyboardButton(text='📲 Проверить котрагента', callback_data='go_ddata')]
 ]
@@ -50,12 +50,23 @@ def sub_cats_markup(cat):
     return builder.as_markup()
 
 
+def sub_bank_markup(cat):
+    sub_cats_list = db_sub_cats_list(cat)
+    builder = InlineKeyboardBuilder()
+    for cat in sub_cats_list:
+        builder.button(text=cat, callback_data=cat)
+    builder.button(text='Назад', callback_data='cancel')
+    builder.button(text='Банкротство физических лиц', url='https://t.me/bankrot_naminimalkah')
+    builder.adjust(1)
+    return builder.as_markup()
+
+
 cancel_button = [[InlineKeyboardButton(text="Главное меню", callback_data='cancel')]]
 cancel_markup = InlineKeyboardMarkup(inline_keyboard=cancel_button)
 
 contacts_button = [
-    [InlineKeyboardButton(text='🌐VK', url='https://vk.com/the_lawyer_isa_maniac')],
-    [InlineKeyboardButton(text='📷instagram', url='https://instagram.com/platunova.mara?igshid=OGQ5ZDc2ODk2ZA==')],
+    [InlineKeyboardButton(text='🌐 VK', url='https://vk.com/the_lawyer_isa_maniac')],
+    [InlineKeyboardButton(text='📷 instagram', url='https://instagram.com/platunova.mara?igshid=OGQ5ZDc2ODk2ZA==')],
     [InlineKeyboardButton(text='Назад', callback_data='cancel')]
 ]
 contacts_markup = InlineKeyboardMarkup(inline_keyboard=contacts_button)
