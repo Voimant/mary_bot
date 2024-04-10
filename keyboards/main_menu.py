@@ -55,8 +55,8 @@ def sub_bank_markup(cat):
     builder = InlineKeyboardBuilder()
     for cat in sub_cats_list:
         builder.button(text=cat, callback_data=cat)
-    builder.button(text='Назад', callback_data='cancel')
     builder.button(text='Банкротство физических лиц', url='https://t.me/bankrot_naminimalkah')
+    builder.button(text='Назад', callback_data='cancel')
     builder.adjust(1)
     return builder.as_markup()
 
