@@ -15,7 +15,7 @@ egrul_button = [
     [InlineKeyboardButton(text='👩🏽‍💻 Запись на консультацию', callback_data='record')],
     [InlineKeyboardButton(text='Назад', callback_data='cancel')]
 ]
-egrul_markup = InlineKeyboardMarkup(inline_keyboard=paginator_button)
+egrul_markup = InlineKeyboardMarkup(inline_keyboard=egrul_button)
 
 
 record_button = [
