@@ -43,7 +43,10 @@ async def otziv(call: CallbackQuery, state: FSMContext):
     photo_2 = FSInputFile('source/otzivi/ot_2.jpg')
     photo_4 = FSInputFile('source/otzivi/ot_3.jpg')
     photo_5 = FSInputFile('source/otzivi/ot_4.jpg')
+    photo_6 = FSInputFile('source/otzivi/ot_4.jpg')
+    photo_7 = FSInputFile('source/otzivi/ot_4.jpg')
 
-    media = [InputMediaPhoto(media=photo_4), InputMediaPhoto(media=photo_1), InputMediaPhoto(media=photo_5)]
+    media = [InputMediaPhoto(media=photo_4), InputMediaPhoto(media=photo_1), InputMediaPhoto(media=photo_5),
+             InputMediaPhoto(media=photo_6), InputMediaPhoto(media=photo_7)]
     await call.message.answer_media_group(media=media)
     await call.message.answer_photo(photo=photo_2, caption='Жду вас на консультации', reply_markup=main_markup)
