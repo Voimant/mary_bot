@@ -58,7 +58,7 @@ def db_records(name, number, about, username):
 
 def db_add_new_user(username: str, chat_id: str):
     with conn.cursor() as cur:
-        insert_query = "INSERT INTO myurist_usertg (username1, chat_id') VALUES ('{}', '{}')".format(username, chat_id)
+        insert_query = "INSERT INTO myurist_usertg (username1, chat_id) VALUES ('{}', '{}')".format(username, chat_id)
         cur.execute(insert_query)
         conn.commit()
 
