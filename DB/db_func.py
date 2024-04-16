@@ -54,3 +54,18 @@ def db_records(name, number, about, username):
         insert_query = "INSERT INTO myurist_record (name, numbers_phone, dispute, username) VALUES ('{}', '{}', '{}', '{}')".format(name, number, about, username)
         cur.execute(insert_query)
         conn.commit()
+
+
+def db_add_new_user(username: str, chat_id: str):
+    with conn.cursor() as cur:
+        insert_query = "INSERT INTO myurist_usertg (username1, chat_id') VALUES ('{}', '{}')".format(username,chat_id)
+        cur.execute(insert_query)
+        conn.commit()
+
+
+def db_member(chat_id):
+    with conn.cursor() as cur:
+        select_cuery = "SELECT chat_id FROM myurist_usertg WHERE chat_id = '{}'".format(chat_id)
+        cur.execute(select_cuery)
+        res = cur.fetchone()
+        return res

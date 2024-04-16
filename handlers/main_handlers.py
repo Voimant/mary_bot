@@ -6,6 +6,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMediaPhoto
 from dotenv import load_dotenv
 
+from DB.db_func import db_add_new_user, db_member
 from source.main_text import main_texts
 from keyboards.main_menu import main_markup
 from aiogram.fsm.context import FSMContext
@@ -18,12 +19,16 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 bot = Bot(token=TOKEN)
 
+
 @router.message(Command('start'))
 async def cmd_start(message: Message):
     photo = FSInputFile('source/start_photo.jpg')
     await message.answer_photo(photo=photo, caption=main_texts, reply_markup=main_markup)
     try:
         await bot.send_message(-1002054778396, f'@{message.from_user.username}, Нажал старт.\n номер телефона: {message.contact.phone_number}')
+        member = db_member(message.chat.id)
+        if member is None:
+            db_add_new_user(str(message.from_user.username), str(message.chat.id))
     except Exception as e:
         await bot.send_message(-1002054778396,
                                f'@{message.from_user.username}, Нажал старт.\n')
