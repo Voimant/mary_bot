@@ -32,6 +32,11 @@ async def cmd_start(message: Message):
     except Exception as e:
         await bot.send_message(-1002054778396,
                                f'@{message.from_user.username}, Нажал старт.\n')
+        member = db_member(message.chat.id)
+        if member is None:
+            db_add_new_user(str(message.from_user.username), str(message.chat.id))
+        else:
+            pass
 
 @router.callback_query(F.data == 'cancel')
 async def cancel(call: CallbackQuery, state: FSMContext):
