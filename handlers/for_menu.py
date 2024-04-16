@@ -94,11 +94,16 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
         await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
                                       reply_markup=paginator_markup)
 
-    elif data['cat'] in ['внесение изменений в ЕГРЮЛ', 'ликвидация бизнеса',
-                         '®️ защита Франшиз', 'семейное право']:
+    elif data['cat'] == 'внесение изменений в ЕГРЮЛ':
         text = f'{list_affiars[x]["result_court"]}'
         await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
                                       reply_markup=egrul_markup)
+
+    elif data['cat'] in ['ликвидация бизнеса',
+                         '®️ защита Франшиз', 'семейное право']:
+        text = f'{list_affiars[x]["result_court"]}'
+        await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                      reply_markup=paginator_markup)
 
     else:
         text = (f'*Дата решения*: {list_affiars[x]["date"]}\n'
@@ -142,11 +147,16 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
                                           reply_markup=paginator_markup)
             await state.update_data(my_delo=x)
 
-        elif data['cat'] in ['внесение изменений в ЕГРЮЛ', 'ликвидация бизнеса', 'семейное право',
-                             '®️ защита Франшиз']:
+        elif data['cat'] == 'внесение изменений в ЕГРЮЛ':
             text = f'{list_affiars[x]["result_court"]}'
             await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
                                           reply_markup=egrul_markup)
+
+        elif data['cat'] in ['ликвидация бизнеса',
+                             '®️ защита Франшиз', 'семейное право']:
+            text = f'{list_affiars[x]["result_court"]}'
+            await call.message.edit_media(media=InputMediaPhoto(media=photo, caption=text, parse_mode='Markdown'),
+                                          reply_markup=paginator_markup)
             await state.update_data(my_delo=x)
 
         else:

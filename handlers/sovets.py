@@ -45,9 +45,9 @@ async def otziv(call: CallbackQuery, state: FSMContext):
     photo_5 = FSInputFile('source/otzivi/ot_4.jpg')
     photo_6 = FSInputFile('source/otzivi/ot_5.png')
     photo_7 = FSInputFile('source/otzivi/ot_6.png')
-    photo_8 = FSInputFile('source/otzivi/ot_4.jpg')
-    photo_9 = FSInputFile('source/otzivi/ot_4.jpg')
-    photo_10 = FSInputFile('source/otzivi/ot_4.jpg')
+    photo_8 = FSInputFile('source/otzivi/ot_7.jpg')
+    photo_9 = FSInputFile('source/otzivi/ot_8.jpg')
+    photo_10 = FSInputFile('source/otzivi/ot_9.jpg')
 
     media = [InputMediaPhoto(media=photo_4), InputMediaPhoto(media=photo_1), InputMediaPhoto(media=photo_5),
              InputMediaPhoto(media=photo_6), InputMediaPhoto(media=photo_7), InputMediaPhoto(media=photo_8),
