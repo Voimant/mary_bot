@@ -176,7 +176,7 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
         await state.clear()
         photo = FSInputFile("source/Машенька.jpg")
         await call.message.edit_media(
-            media=InputMediaPhoto(media=photo, caption="Как к вам могу обращаться?", parse_mode='Markdown'),
+            media=InputMediaPhoto(media=photo, caption="Напишите ваше имя", parse_mode='Markdown'),
             reply_markup=cancel_markup)
         await state.set_state(Record.name)
 
