@@ -67,6 +67,8 @@ cancel_markup = InlineKeyboardMarkup(inline_keyboard=cancel_button)
 contacts_button = [
     [InlineKeyboardButton(text='🌐 VK', url='https://vk.com/the_lawyer_isa_maniac')],
     [InlineKeyboardButton(text='📷 instagram', url='https://instagram.com/platunova.mara?igshid=OGQ5ZDc2ODk2ZA==')],
+    [InlineKeyboardButton(text='ТГ канал Банкротство на минималках', url='https://t.me/bankrot_naminimalkah')],
+    [InlineKeyboardButton(text='ТГ канал Мозг для правообладателей', url='https://t.me/+SLUgWFJB8wZWRUn2')],
     [InlineKeyboardButton(text='Назад', callback_data='cancel')]
 ]
 contacts_markup = InlineKeyboardMarkup(inline_keyboard=contacts_button)
