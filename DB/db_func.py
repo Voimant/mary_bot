@@ -69,3 +69,45 @@ def db_member(chat_id):
         cur.execute(select_cuery)
         res = cur.fetchone()
         return res
+
+
+def db_new_chat(chat_id:int, username:str, topic_id):
+    with conn.cursor() as cur:
+        insert_query = ("insert into myurist_chatusers (chat_id, user_name, topic_id) VALUES"
+                        " ({}, '{}', {}) ON CONFLICT DO NOTHING").format(chat_id, username, topic_id)
+        cur.execute(insert_query)
+        conn.commit()
+
+def db_list_id():
+    with conn.cursor() as cur:
+        select_query = "select chat_id from myurist_chatusers"
+        cur.execute(select_query)
+        ret = cur.fetchall()
+        ret_list = []
+        for tup in ret:
+            for row in tup:
+                ret_list.append(row)
+        return ret_list
+
+# print(db_list_id())
+
+def db_user_topic(chat_id):
+    with conn.cursor() as cur:
+        select_query = "select topic_id from myurist_chatusers where chat_id = {}".format(chat_id)
+        cur.execute(select_query)
+        ret = cur.fetchone()
+        return ret[0]
+
+def db_user_id(topic):
+    with conn.cursor() as cur:
+        select_query = "select chat_id from myurist_chatusers where topic_id = {}".format(int(topic))
+        cur.execute(select_query)
+        ret = cur.fetchone()
+        return ret[0]
+
+
+def db_delete_chat(chat_id):
+    with conn.cursor() as cur:
+        delete_query = "DELETE FROM myurist_chatusers where chat_id = {}".format(chat_id)
+        cur.execute(delete_query)
+        conn.commit()

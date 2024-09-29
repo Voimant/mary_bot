@@ -6,7 +6,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMediaPhoto
 from dotenv import load_dotenv
 
-from DB.db_func import db_add_new_user, db_member
+from DB.db_func import db_add_new_user, db_member, db_list_id, db_new_chat
 from source.main_text import main_texts
 from keyboards.main_menu import main_markup
 from aiogram.fsm.context import FSMContext
@@ -24,19 +24,19 @@ bot = Bot(token=TOKEN)
 async def cmd_start(message: Message):
     photo = FSInputFile('source/start_photo.jpg')
     await message.answer_photo(photo=photo, caption=main_texts, reply_markup=main_markup)
-    try:
-        await bot.send_message(-1002054778396, f'@{message.from_user.username}, Нажал старт.\n номер телефона: {message.contact.phone_number}')
-        member = db_member(message.chat.id)
-        if member is None:
-            db_add_new_user(str(message.from_user.username), str(message.chat.id))
-    except Exception as e:
-        await bot.send_message(-1002054778396,
-                               f'@{message.from_user.username}, Нажал старт.\n')
-        member = db_member(message.chat.id)
-        if member is None:
-            db_add_new_user(str(message.from_user.username), str(message.chat.id))
-        else:
-            pass
+    list_of_id = db_list_id()
+    if message.from_user.id not in list_of_id:
+        topic = await bot.create_forum_topic(-1002204508059, f'{str(message.from_user.username)}')
+        db_new_chat(message.from_user.id, message.from_user.username, topic.message_thread_id)
+        await bot.send_message(-1002204508059,'У вас новый клиент', message_thread_id=topic.message_thread_id)
+    else:
+        pass
+    if message.text == '/start bashuk':
+        await bot.send_message(-1002204508059, f'клиент @{message.from_user.username} Реферал от Башук и Чичканов\n id={message.from_user.id}')
+    else:
+        await bot.send_message(-1002204508059, f'клиент @{message.from_user.username} перешел по прямой ссылке\n id={message.from_user.id}')
+
+
 
 @router.callback_query(F.data == 'cancel')
 async def cancel(call: CallbackQuery, state: FSMContext):
