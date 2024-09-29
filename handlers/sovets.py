@@ -24,7 +24,7 @@ bot = Bot(token=TOKEN)
 
 @router.callback_query(F.data == 'mary_sovets')
 async def get_sovets(call: CallbackQuery, state: FSMContext):
-    await bot.send_message(-1002054778396, f'@{call.from_user.username}, Перешел в советы')
+    await bot.send_message(-1002204508059, f'@{call.from_user.username}, Перешел в советы')
     await state.clear()
     count = random.randint(0, len(sovets_list) - 1)
     if call.message.content_type == ContentType.PHOTO:
@@ -38,7 +38,7 @@ async def get_sovets(call: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data == 'button_3')
 async def otziv(call: CallbackQuery, state: FSMContext):
     await state.clear()
-    await bot.send_message(-1002054778396, f'@{call.from_user.username}, Перешел в отзывы')
+    await bot.send_message(-1002204508059, f'@{call.from_user.username}, Перешел в отзывы')
     photo_1 = FSInputFile('source/otzivi/ot_1.jpg')
     photo_2 = FSInputFile('source/otzivi/ot_2.jpg')
     photo_4 = FSInputFile('source/otzivi/ot_3.jpg')
