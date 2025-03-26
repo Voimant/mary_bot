@@ -1,8 +1,6 @@
-from pprint import pprint
 
-import pandas as pd
 import psycopg2.extras
-# from psycopg2.errors import UniqueViolation
+
 
 from DB.DB import conn
 
@@ -49,9 +47,9 @@ def search_delo(sub_cats):
         return res_list
 
 
-def db_records(name, number, about, username):
+def db_records(about, username):
     with conn.cursor() as cur:
-        insert_query = "INSERT INTO myurist_record (name, numbers_phone, dispute, username) VALUES ('{}', '{}', '{}', '{}')".format(name, number, about, username)
+        insert_query = "INSERT INTO myurist_record (dispute, username) VALUES ('{}', '{}')".format(about, username)
         cur.execute(insert_query)
         conn.commit()
 

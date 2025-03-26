@@ -176,9 +176,9 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
         await state.clear()
         photo = FSInputFile("source/Машенька.jpg")
         await call.message.edit_media(
-            media=InputMediaPhoto(media=photo, caption="Напишите ваше имя", parse_mode='Markdown'),
+            media=InputMediaPhoto(media=photo, caption="Опишите суть вашего вопроса и я с вами свяжусь, для согласования времени онлайн консультации", parse_mode='Markdown'),
             reply_markup=cancel_markup)
-        await state.set_state(Record.name)
+        await state.set_state(Record.about)
 
 
 @router.callback_query(F.data == 'record')
@@ -186,29 +186,9 @@ async def get_new_record(call: types.CallbackQuery, state:FSMContext):
     await bot.send_message(-1002204508059, f'@{call.from_user.username}, нажал Записаться на консультацию')
     await state.clear()
     photo = FSInputFile("source/Машенька.jpg")
-    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Напишите ваше имя?", parse_mode='Markdown'),
+    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Опишите суть вашего вопроса и я с вами свяжусь, для согласования времени онлайн консультации", parse_mode='Markdown'),
                                   reply_markup=cancel_markup)
-    await state.set_state(Record.name)
-
-
-@router.message(Record.name)
-async def get_record(mess: types.Message, state: FSMContext):
-    await state.update_data(name=mess.text)
-    await mess.answer('Введите ваш мобильный номер телефона', reply_markup=cancel_markup)
-    await state.set_state(Record.number_phone)
-
-
-@router.message(Record.number_phone)
-async def get_number(mess: Message, state: FSMContext):
-    pattern = r"^(8|\+7|7)?\s*[\(]?(\d{3})[\)-]?\s*(\d{3})[-\s]*(\d{2})[-\s]*(\d{2})\s*[\(]?(\w+\.)?\s*(\d+)?[\)]?"
-    number = fullmatch(pattern, mess.text)
-    if number is None:
-        await mess.answer('Введите номер в формате: 89222222221 или 799911122233', reply_markup=cancel_markup)
-        await state.set_state(Record.number_phone)
-    else:
-        await state.update_data(number_phone=mess.text)
-        await mess.answer('кратко опишите суть дела', reply_markup=cancel_markup)
-        await state.set_state(Record.about)
+    await state.set_state(Record.about)
 
 
 @router.message(Record.about)
@@ -226,18 +206,17 @@ async def get_about(mess: Message, state: FSMContext):
 
 @router.callback_query(Record.ready)
 async def get_ready(call: types.CallbackQuery, state: FSMContext):
+    data = await state.get_data()
     if call.data == 'record_go':
-        data = await state.get_data()
         db_records(
-            data['name'],
-            data['number_phone'],
             data['about'],
-            f'https://t.me/{call.from_user.username}'
-        )
+            f'https://t.me/{call.from_user.username}')
     photo = FSInputFile("source/Машенька.jpg")
     await call.message.answer_photo(photo=photo, caption='Заявка отправлена, свяжусь с Вами в ближайшее время', reply_markup=main_markup)
-    await bot.send_message(345474875, f'У вас новая заявка от @{call.from_user.username} перейти в'
-                                      f'[Админ-панель](http://95.163.229.135/admin/)', parse_mode='Markdown')
+    await bot.send_message(345474875, f'#order НОВАЯ_ЗАЯВКА\n'
+                                      f'@{call.from_user.username}\n'
+                                      f'[Админ-панель](http://95.163.229.135/admin/)'
+                                      f'{data["about"]}', parse_mode='Markdown')
     await state.clear()
 
 
