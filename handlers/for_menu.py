@@ -176,7 +176,7 @@ async def get_sub_cat(call: types.CallbackQuery, state: FSMContext):
         await state.clear()
         photo = FSInputFile("source/Машенька.jpg")
         await call.message.edit_media(
-            media=InputMediaPhoto(media=photo, caption="Опишите суть вашего вопроса и я с вами свяжусь, для согласования времени онлайн консультации", parse_mode='Markdown'),
+            media=InputMediaPhoto(media=photo, caption="Опишите суть вашего вопроса. Я с вами свяжусь для согласования времени онлайн консультации", parse_mode='Markdown'),
             reply_markup=cancel_markup)
         await state.set_state(Record.about)
 
@@ -186,7 +186,7 @@ async def get_new_record(call: types.CallbackQuery, state:FSMContext):
     await bot.send_message(-1002204508059, f'@{call.from_user.username}, нажал Записаться на консультацию')
     await state.clear()
     photo = FSInputFile("source/Машенька.jpg")
-    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Опишите суть вашего вопроса и я с вами свяжусь, для согласования времени онлайн консультации", parse_mode='Markdown'),
+    await call.message.edit_media(media=InputMediaPhoto(media=photo, caption="Опишите суть вашего вопроса. Я с вами свяжусь для согласования времени онлайн консультации", parse_mode='Markdown'),
                                   reply_markup=cancel_markup)
     await state.set_state(Record.about)
 
@@ -212,7 +212,7 @@ async def get_ready(call: types.CallbackQuery, state: FSMContext):
             data['about'],
             f'https://t.me/{call.from_user.username}')
     photo = FSInputFile("source/Машенька.jpg")
-    await call.message.answer_photo(photo=photo, caption='Заявка отправлена, свяжусь с Вами в ближайшее время', reply_markup=main_markup)
+    await call.message.answer_photo(photo=photo, caption='Заявка отправлена, свяжусь с вами в ближайшее время', reply_markup=main_markup)
     await bot.send_message(-1002204508059, f'#order НОВАЯ_ЗАЯВКА\n'
                                       f'@{call.from_user.username}\n'
                                       f'{data["about"]}')
